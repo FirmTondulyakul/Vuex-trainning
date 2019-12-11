@@ -1,18 +1,54 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <h1>Videos</h1>
+    <div class="video-container">
+      <div v-for="video in videos" :key="video.name">
+        <div class="video-box">
+          <img :src="video.thumbnail" />
+          <div class="video-text">
+            <router-link :to="{name: 'video-watch', params: { id:video.id}}">
+              <h3>{{ video.name }}</h3>
+            </router-link>
+            <div v-html="video.description"></div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
-
+// import Api from "@/services/api";
 export default {
   name: "home",
-  components: {
-    HelloWorld
+  components: {},
+  data() {
+    return {
+      // videos :Api().get('/videos')
+      videos: this.$store.state.videos
+    };
   }
 };
 </script>
+<style lang="scss" scoped >
+.video-container {
+  .video-box {
+    border: 1px solid black;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 10px;
+    text-align: left;
+    display: flex;
+    justify-content: flex-start;
+    img {
+      max-height: 150px;
+      width: 200px;
+      padding: 10 px;
+    }
+  }
+}
+.video-text {
+  padding: 10px;
+}
+</style>
